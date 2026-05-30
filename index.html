@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dixie wird 70! 🌸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --pink:   #FF3D8B;
+  --lpink:  #FF80B8;
+  --orange: #FF7B00;
+  --yellow: #FFD600;
+  --green:  #4EB84A;
+  --lgreen: #7DD97A;
+  --teal:   #00B4A2;
+  --purple: #8B3FD9;
+  --lpurp:  #B57BF5;
+  --cream:  #FFFBF0;
+  --deep:   #3A1060;
+  --text:   #3A1060;
+  --card-r: 20px;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+}
+
+/* ── BG FLOWERS LAYER ────────────────────────── */
+#bg-flowers {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  overflow: hidden;
+}
+.bgf {
+  position: absolute;
+  animation: bgSpin linear infinite;
+  transform-origin: center center;
+}
+@keyframes bgSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes bgFloat {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50%     { transform: translateY(-14px) rotate(10deg); }
+}
+
+/* ── PAGES ───────────────────────────────────── */
+.page {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 1;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.page.active { opacity: 1; pointer-events: auto; }
+
+/* ── HOME ────────────────────────────────────── */
+.home-wrap {
+  display: flex; flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  text-align: center;
+  position: relative; z-index: 2;
+  padding: 1rem 2rem;
+}
+
+.home-title {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(2.6rem, 7.5vw, 5.8rem);
+  line-height: 1.15;
+  background: linear-gradient(130deg,
+    var(--pink) 0%, var(--orange) 30%, var(--yellow) 55%,
+    var(--green) 75%, var(--purple) 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(2px 3px 0 rgba(255,61,139,0.15));
+  animation: rainbowFlow 6s linear infinite;
+}
+@keyframes rainbowFlow {
+  0%   { background-position: 0%   center; }
+  100% { background-position: 250% center; }
+}
+
+.home-sub {
+  font-size: 0.88rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--purple);
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.home-btns {
+  display: flex; gap: 4rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+/* Large flower buttons on home */
+.flower-btn {
+  background: none; border: none; cursor: pointer; padding: 0;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.2));
+}
+.flower-btn:hover { transform: scale(1.12) rotate(18deg); }
+.flower-btn svg   { width: 165px; height: 165px; display: block; }
+
+/* ── GALLERY PAGES ────────────────────────────── */
+.g-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; width: 100%;
+  max-width: 1020px;
+  padding: 1.2rem 1.5rem; gap: 0.75rem;
+}
+
+.g-header { display: flex; align-items: center; gap: 1rem; width: 100%; }
+
+/* Flower back button */
+.back-flower {
+  background: none; border: none; cursor: pointer; padding: 0;
+  flex-shrink: 0;
+  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.18));
+}
+.back-flower:hover { transform: scale(1.18) rotate(-12deg); }
+.back-flower svg   { width: 46px; height: 46px; display: block; }
+
+.g-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.55rem; line-height: 1.1;
+}
+.g-title.t-pink   { color: var(--pink); }
+.g-title.t-orange { color: var(--orange); }
+
+/* ── COVERFLOW ────────────────────────────────── */
+.cf-outer {
+  display: flex; align-items: center;
+  gap: 0.4rem; width: 100%;
+}
+
+/* Flower nav arrow buttons */
+.cf-flower-btn {
+  flex-shrink: 0; background: none; border: none; cursor: pointer; padding: 0;
+  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2));
+}
+.cf-flower-btn:hover { transform: scale(1.18) rotate(22deg); }
+.cf-flower-btn svg   { width: 58px; height: 58px; display: block; }
+
+.cf-stage-wrap {
+  flex: 1; position: relative;
+  height: 278px; overflow: hidden;
+  perspective: 1500px;
+}
+.cf-stage { position: relative; width: 100%; height: 100%; }
+
+.cf-item {
+  position: absolute;
+  width: 300px; height: 225px;
+  top: 50%;
+  border-radius: var(--card-r);
+  overflow: hidden; cursor: pointer;
+  transition:
+    left      0.58s cubic-bezier(0.25,0.46,0.45,0.94),
+    transform 0.58s cubic-bezier(0.25,0.46,0.45,0.94),
+    filter    0.58s ease,
+    opacity   0.58s ease,
+    box-shadow 0.3s ease;
+  user-select: none;
+  border: 3px solid transparent;
+}
+.cf-item.is-center {
+  border-color: var(--yellow);
+  box-shadow: 0 8px 36px rgba(255,123,0,0.35),
+              0 0 0 2px var(--orange);
+}
+.cf-item img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  pointer-events: none; draggable: false;
+}
+
+/* ── FLOWER DOTS ──────────────────────────────── */
+.cf-dots { display: flex; gap: 8px; align-items: center; }
+.cf-dot  { cursor: pointer; font-size: 1rem; transition: all 0.3s; opacity: 0.4; line-height:1; }
+.cf-dot.on { opacity: 1; font-size: 1.5rem; }
+.cf-dot:hover { opacity: 0.75; }
+
+/* ── WAVE CAPTION ─────────────────────────────── */
+.wave-cap {
+  height: 2.2em; text-align: center;
+  font-size: 1.05rem; font-weight: 700;
+}
+.wc {
+  display: inline-block;
+  animation: waveLetter 2.3s ease-in-out infinite;
+}
+@keyframes waveLetter {
+  0%,100% { transform: translateY(0);    color: var(--purple); }
+  50%      { transform: translateY(-9px); color: var(--pink); }
+}
+
+/* ── VIDEO PLAY OVERLAY ────────────────────────── */
+.play-ov {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.12); transition: background 0.2s;
+}
+.cf-item:hover .play-ov { background: rgba(0,0,0,0.04); }
+.play-ring {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; padding-left: 5px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+.cf-item:hover .play-ring { transform: scale(1.1); }
+
+/* ── MODALS ───────────────────────────────────── */
+.modal-bg {
+  position: fixed; inset: 0;
+  background: rgba(58,16,96,0.88); z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-bg.open { opacity: 1; pointer-events: auto; }
+
+.modal-box { position: relative; }
+
+/* Close flower button (top right) */
+.modal-close-btn {
+  position: absolute; top: -58px; right: -6px;
+  background: none; border: none; cursor: pointer; padding: 0;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.35));
+}
+.modal-close-btn:hover { transform: scale(1.2) rotate(30deg); }
+.modal-close-btn svg { width: 50px; height: 50px; display: block; }
+
+/* Image modal */
+#imgModal .zoom-img {
+  display: block;
+  max-width:  min(90vw, 900px);
+  max-height: min(80vh, 680px);
+  width: auto; height: auto;
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.65);
+  object-fit: contain;
+  border: 4px solid var(--yellow);
+}
+
+/* Video modal */
+.vid-modal-inner { width: min(90vw, 820px); }
+.modal-ratio {
+  aspect-ratio: 16/9; border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.65);
+  border: 4px solid var(--orange);
+}
+.modal-ratio iframe { width: 100%; height: 100%; border: none; display: block; }
+
+/* ── ENTRY ANIMATIONS ─────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+#page-home.active .home-title { animation: fadeUp 0.8s 0.1s ease both; }
+#page-home.active .home-sub   { animation: fadeUp 0.8s 0.28s ease both; }
+#page-home.active .home-btns  { animation: fadeUp 0.8s 0.44s ease both; }
+
+/* ── RESPONSIVE ───────────────────────────────── */
+@media (max-width: 700px) {
+  .home-btns      { gap: 2rem; }
+  .flower-btn svg { width: 130px; height: 130px; }
+  .cf-stage-wrap  { height: 235px; }
+  .cf-item        { width: 240px; height: 180px; }
+  .cf-flower-btn svg { width: 46px; height: 46px; }
+}
+
+button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<!-- Decorative background flowers -->
+<div id="bg-flowers"></div>
+
+<!-- ══════════════ HOME PAGE ══════════════ -->
+<div id="page-home" class="page active">
+  <div class="home-wrap">
+    <h1 class="home-title">Dixie wird&nbsp;70&thinsp;…</h1>
+    <p class="home-sub">🌸 &nbsp; Herzlichen Glückwunsch &nbsp; 🌸</p>
+    <div class="home-btns">
+
+      <!-- BILDER flower button (gold/pink) -->
+      <button class="flower-btn" onclick="showPage('bilder')">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#FFD600" transform="rotate(0,60,60)"/>
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#FFAB00" transform="rotate(60,60,60)"/>
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#FFD600" transform="rotate(120,60,60)"/>
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#FFAB00" transform="rotate(180,60,60)"/>
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#FFD600" transform="rotate(240,60,60)"/>
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#FFAB00" transform="rotate(300,60,60)"/>
+          <circle cx="60" cy="60" r="29" fill="#FF3D8B"/>
+          <circle cx="60" cy="60" r="26" fill="#FF5A9E"/>
+          <text x="60" y="53" font-size="22" text-anchor="middle" dominant-baseline="middle"
+            style="font-family:Apple Color Emoji,Segoe UI Emoji,sans-serif">📸</text>
+          <text x="60" y="76" font-size="10.5" text-anchor="middle" fill="white"
+            font-family="'Nunito',sans-serif" font-weight="800" letter-spacing="1.5">BILDER</text>
+        </svg>
+      </button>
+
+      <!-- VIDEOS flower button (purple/orange) -->
+      <button class="flower-btn" onclick="showPage('videos')">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#B77BF5" transform="rotate(0,60,60)"/>
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#8B3FD9" transform="rotate(60,60,60)"/>
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#B77BF5" transform="rotate(120,60,60)"/>
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#8B3FD9" transform="rotate(180,60,60)"/>
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#B77BF5" transform="rotate(240,60,60)"/>
+          <ellipse cx="60" cy="19" rx="14" ry="22" fill="#8B3FD9" transform="rotate(300,60,60)"/>
+          <circle cx="60" cy="60" r="29" fill="#FF7B00"/>
+          <circle cx="60" cy="60" r="26" fill="#FF8F1A"/>
+          <text x="60" y="53" font-size="22" text-anchor="middle" dominant-baseline="middle"
+            style="font-family:Apple Color Emoji,Segoe UI Emoji,sans-serif">🎬</text>
+          <text x="60" y="76" font-size="10.5" text-anchor="middle" fill="white"
+            font-family="'Nunito',sans-serif" font-weight="800" letter-spacing="1.5">VIDEOS</text>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ BILDER PAGE ══════════════ -->
+<div id="page-bilder" class="page">
+  <div class="g-wrap">
+    <div class="g-header">
+      <button class="back-flower" onclick="showPage('home')" title="Zurück">
+        <svg viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#4EB84A" transform="rotate(0,23,23)"/>
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#7DD97A" transform="rotate(60,23,23)"/>
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#4EB84A" transform="rotate(120,23,23)"/>
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#7DD97A" transform="rotate(180,23,23)"/>
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#4EB84A" transform="rotate(240,23,23)"/>
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#7DD97A" transform="rotate(300,23,23)"/>
+          <circle cx="23" cy="23" r="12" fill="#FFD600"/>
+          <text x="23" y="27" font-size="13" text-anchor="middle" fill="#3A1060"
+            font-family="sans-serif" font-weight="bold">&#8592;</text>
+        </svg>
+      </button>
+      <h2 class="g-title t-pink">Unsere schönsten Momente</h2>
+    </div>
+
+    <div class="cf-outer">
+      <!-- Left flower arrow (pink/yellow) -->
+      <button class="cf-flower-btn" onclick="cfNav('img',-1)" title="Zurück">
+        <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#FF3D8B" transform="rotate(0,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#FF80B8" transform="rotate(72,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#FF3D8B" transform="rotate(144,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#FF80B8" transform="rotate(216,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#FF3D8B" transform="rotate(288,29,29)"/>
+          <circle cx="29" cy="29" r="15" fill="#FFD600"/>
+          <text x="29" y="34" font-size="15" text-anchor="middle" fill="#3A1060"
+            font-family="sans-serif" font-weight="bold">&#9664;</text>
+        </svg>
+      </button>
+
+      <div class="cf-stage-wrap">
+        <div class="cf-stage" id="img-stage"></div>
+      </div>
+
+      <!-- Right flower arrow (pink/yellow) -->
+      <button class="cf-flower-btn" onclick="cfNav('img',1)" title="Weiter">
+        <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#FF3D8B" transform="rotate(0,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#FF80B8" transform="rotate(72,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#FF3D8B" transform="rotate(144,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#FF80B8" transform="rotate(216,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#FF3D8B" transform="rotate(288,29,29)"/>
+          <circle cx="29" cy="29" r="15" fill="#FFD600"/>
+          <text x="29" y="34" font-size="15" text-anchor="middle" fill="#3A1060"
+            font-family="sans-serif" font-weight="bold">&#9654;</text>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cf-dots" id="img-dots"></div>
+  </div>
+</div>
+
+<!-- ══════════════ VIDEOS PAGE ══════════════ -->
+<div id="page-videos" class="page">
+  <div class="g-wrap">
+    <div class="g-header">
+      <button class="back-flower" onclick="showPage('home')" title="Zurück">
+        <svg viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#8B3FD9" transform="rotate(0,23,23)"/>
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#B77BF5" transform="rotate(60,23,23)"/>
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#8B3FD9" transform="rotate(120,23,23)"/>
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#B77BF5" transform="rotate(180,23,23)"/>
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#8B3FD9" transform="rotate(240,23,23)"/>
+          <ellipse cx="23" cy="9"  rx="8" ry="12" fill="#B77BF5" transform="rotate(300,23,23)"/>
+          <circle cx="23" cy="23" r="12" fill="#FFD600"/>
+          <text x="23" y="27" font-size="13" text-anchor="middle" fill="#3A1060"
+            font-family="sans-serif" font-weight="bold">&#8592;</text>
+        </svg>
+      </button>
+      <h2 class="g-title t-orange">Lieblingsvideos</h2>
+    </div>
+
+    <div class="cf-outer">
+      <!-- Left flower arrow (purple/orange) -->
+      <button class="cf-flower-btn" onclick="cfNav('vid',-1)" title="Zurück">
+        <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#8B3FD9" transform="rotate(0,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#B77BF5" transform="rotate(72,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#8B3FD9" transform="rotate(144,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#B77BF5" transform="rotate(216,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#8B3FD9" transform="rotate(288,29,29)"/>
+          <circle cx="29" cy="29" r="15" fill="#FF7B00"/>
+          <text x="29" y="34" font-size="15" text-anchor="middle" fill="white"
+            font-family="sans-serif" font-weight="bold">&#9664;</text>
+        </svg>
+      </button>
+
+      <div class="cf-stage-wrap">
+        <div class="cf-stage" id="vid-stage"></div>
+      </div>
+
+      <button class="cf-flower-btn" onclick="cfNav('vid',1)" title="Weiter">
+        <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#8B3FD9" transform="rotate(0,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#B77BF5" transform="rotate(72,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#8B3FD9" transform="rotate(144,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#B77BF5" transform="rotate(216,29,29)"/>
+          <ellipse cx="29" cy="10" rx="9" ry="13" fill="#8B3FD9" transform="rotate(288,29,29)"/>
+          <circle cx="29" cy="29" r="15" fill="#FF7B00"/>
+          <text x="29" y="34" font-size="15" text-anchor="middle" fill="white"
+            font-family="sans-serif" font-weight="bold">&#9654;</text>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cf-dots" id="vid-dots"></div>
+    <div class="wave-cap" id="vid-wave"></div>
+  </div>
+</div>
+
+<!-- ══════════════ IMAGE MODAL ══════════════ -->
+<div class="modal-bg" id="imgModal" onclick="onImgBg(event)">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeImgModal()" title="Schließen">
+      <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#FFD600" transform="rotate(0,25,25)"/>
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#FFAB00" transform="rotate(60,25,25)"/>
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#FFD600" transform="rotate(120,25,25)"/>
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#FFAB00" transform="rotate(180,25,25)"/>
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#FFD600" transform="rotate(240,25,25)"/>
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#FFAB00" transform="rotate(300,25,25)"/>
+        <circle cx="25" cy="25" r="13" fill="#FF3D8B"/>
+        <text x="25" y="29" font-size="14" text-anchor="middle" fill="white"
+          font-family="sans-serif" font-weight="bold">&#10005;</text>
+      </svg>
+    </button>
+    <img class="zoom-img" id="modalImg" src="" alt="Vergrößerte Ansicht"/>
+  </div>
+</div>
+
+<!-- ══════════════ VIDEO MODAL ══════════════ -->
+<div class="modal-bg" id="vidModal" onclick="onVidBg(event)">
+  <div class="modal-box vid-modal-inner">
+    <button class="modal-close-btn" onclick="closeVidModal()" title="Schließen">
+      <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#B77BF5" transform="rotate(0,25,25)"/>
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#8B3FD9" transform="rotate(60,25,25)"/>
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#B77BF5" transform="rotate(120,25,25)"/>
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#8B3FD9" transform="rotate(180,25,25)"/>
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#B77BF5" transform="rotate(240,25,25)"/>
+        <ellipse cx="25" cy="9"  rx="8" ry="12" fill="#8B3FD9" transform="rotate(300,25,25)"/>
+        <circle cx="25" cy="25" r="13" fill="#FF7B00"/>
+        <text x="25" y="29" font-size="14" text-anchor="middle" fill="white"
+          font-family="sans-serif" font-weight="bold">&#10005;</text>
+      </svg>
+    </button>
+    <div class="modal-ratio">
+      <iframe id="modalFrame" src="" allowfullscreen
+        allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   DATA
+   ════════════════════════════════════════════════ */
+
+// Automatisch alle 249 Bilder aus dem GitHub Repository laden
+const BASE_URL = 'https://infostele.github.io/Doris/bilder/';
+const IMAGES = Array.from({length: 249}, (_, i) => {
+  const name = 'img-' + String(i).padStart(3, '0') + '.jpg';
+  return { src: BASE_URL + name, href: BASE_URL + name };
+});
+
+const VIDEOS = [
+  { id:'DbwaFcyORbg', caption:'Uta' },
+  { id:'sArnlQDEJFY', caption:'Tessa' },
+  { id:'U8zxRzG5S9o', caption:'Gabriele & Heinz' },
+  { id:'mBSCUJZFDe8', caption:'Anna' },
+  { id:'nenhgHbKp0M', caption:'Christa' },
+  { id:'4CzmjluBXNk', caption:'Alex' },
+  { id:'mKwcyfM2zlk', caption:'Christa AI' },
+  { id:'gEMyz1aBJXk', caption:'Dieter & Elke' },
+  { id:'8A7AJqJ1--M', caption:'Detlef & Renate' },
+  { id:'Xz5VxYh-sBg', caption:'Nina' },
+  { id:'IMyzuQBz2Vk', caption:'Günther & Monika' },
+  { id:'8aBBBn5tI2M', caption:'Klaus' },
+  { id:'bsyG_flUYJs', caption:'Neah' },
+  { id:'tRerLA8hzHQ', caption:'Lenn' },
+  { id:'2LWREjueTS4', caption:'Gerhard & Doris' }
+];
+
+/* ════════════════════════════════════════════════
+   STATE
+   ════════════════════════════════════════════════ */
+let imgIdx = 0, vidIdx = 0;
+
+/* ════════════════════════════════════════════════
+   PAGE NAVIGATION
+   ════════════════════════════════════════════════ */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (name === 'bilder') { ensureInit('img'); updateCF('img'); }
+  if (name === 'videos') { ensureInit('vid'); updateCF('vid'); renderWave(); }
+}
+
+/* ════════════════════════════════════════════════
+   COVERFLOW — position table
+   ════════════════════════════════════════════════ */
+const POS = {
+  '-2': { left:'-7%',   ry: 58, sc:0.62, br:0.18, op:0    },
+  '-1': { left:'9%',    ry: 42, sc:0.82, br:0.5,  op:0.92 },
+   '0': { left:'50%',   ry:  0, sc:1,    br:1,    op:1    },
+   '1': { left:'91%',   ry:-42, sc:0.82, br:0.5,  op:0.92 },
+   '2': { left:'107%',  ry:-58, sc:0.62, br:0.18, op:0    }
+};
+
+function offset(type, i) {
+  const N   = (type === 'img' ? IMAGES : VIDEOS).length;
+  const idx = type === 'img' ? imgIdx : vidIdx;
+  const raw = (i - idx + N) % N;
+  const norm = raw > N / 2 ? raw - N : raw;
+  return Math.max(-2, Math.min(2, norm));
+}
+
+function applyPos(el, p) {
+  el.style.left      = p.left;
+  el.style.transform = `translate(-50%,-50%) rotateY(${p.ry}deg) scale(${p.sc})`;
+  el.style.filter    = `brightness(${p.br})`;
+  el.style.opacity   = p.op;
+  el.style.zIndex    = p.ry === 0 ? 10 : (Math.abs(p.ry) < 50 ? 5 : 1);
+}
+
+/* Build DOM for a gallery type (runs once per type) */
+function ensureInit(type) {
+  const stage = document.getElementById(type + '-stage');
+  if (stage.dataset.built) return;
+  stage.dataset.built = '1';
+
+  const items = type === 'img' ? IMAGES : VIDEOS;
+  const dotsEl = document.getElementById(type + '-dots');
+  const dotChar = type === 'img' ? '🌸' : '🌼';
+
+  items.forEach((item, i) => {
+    const el = document.createElement('div');
+    el.className = 'cf-item';
+    el.dataset.i = i;
+
+    const img = document.createElement('img');
+    img.alt = (type === 'img' ? 'Bild ' : 'Video ') + (i+1);
+    img.draggable = false;
+    img.src = type === 'img' ? item.src
+                              : `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`;
+    el.appendChild(img);
+
+    if (type === 'vid') {
+      const ov = document.createElement('div');
+      ov.className = 'play-ov';
+      ov.innerHTML = '<div class="play-ring">&#9654;</div>';
+      el.appendChild(ov);
+    }
+
+    el.addEventListener('click', () => {
+      const off = offset(type, i);
+      if (off === 0) {
+        if (type === 'img') openImgModal(item.src);
+        else                openVidModal(item.id);
+      } else {
+        if (type === 'img') imgIdx = i; else vidIdx = i;
+        updateCF(type);
+      }
+    });
+
+    /* no transition on first render */
+    el.style.transition = 'none';
+    applyPos(el, POS[String(offset(type, i))]);
+    stage.appendChild(el);
+
+    /* dot */
+    const dot = document.createElement('span');
+    dot.className = 'cf-dot';
+    dot.textContent = dotChar;
+    dot.addEventListener('click', () => {
+      if (type === 'img') imgIdx = i; else vidIdx = i;
+      updateCF(type);
+    });
+    dotsEl.appendChild(dot);
+  });
+
+  /* re-enable transitions after 2 frames */
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    Array.from(stage.children).forEach(el => { el.style.transition = ''; });
+  }));
+}
+
+function updateCF(type) {
+  const stage  = document.getElementById(type + '-stage');
+  const dotsEl = document.getElementById(type + '-dots');
+  const idx    = type === 'img' ? imgIdx : vidIdx;
+
+  Array.from(stage.children).forEach(el => {
+    const off = offset(type, parseInt(el.dataset.i));
+    applyPos(el, POS[String(off)]);
+    el.classList.toggle('is-center', off === 0);
+  });
+
+  Array.from(dotsEl.children).forEach((d, i) => {
+    d.classList.toggle('on', i === idx);
+  });
+
+  if (type === 'vid') renderWave();
+}
+
+function cfNav(type, dir) {
+  const N = (type === 'img' ? IMAGES : VIDEOS).length;
+  if (type === 'img') imgIdx = (imgIdx + dir + N) % N;
+  else                vidIdx = (vidIdx + dir + N) % N;
+  updateCF(type);
+}
+
+/* ════════════════════════════════════════════════
+   WAVE CAPTION
+   ════════════════════════════════════════════════ */
+function renderWave() {
+  const el = document.getElementById('vid-wave');
+  el.innerHTML = '';
+  [...VIDEOS[vidIdx].caption].forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.className = 'wc';
+    s.style.animationDelay = (i * 0.065) + 's';
+    s.textContent = ch === ' ' ? '\u00A0' : ch;
+    el.appendChild(s);
+  });
+}
+
+/* ════════════════════════════════════════════════
+   IMAGE MODAL (zoom)
+   ════════════════════════════════════════════════ */
+function openImgModal(src) {
+  document.getElementById('modalImg').src = src;
+  document.getElementById('imgModal').classList.add('open');
+}
+function closeImgModal() {
+  document.getElementById('imgModal').classList.remove('open');
+}
+function onImgBg(e) {
+  if (e.target === document.getElementById('imgModal')) closeImgModal();
+}
+
+/* ════════════════════════════════════════════════
+   VIDEO MODAL
+   ════════════════════════════════════════════════ */
+function openVidModal(id) {
+  document.getElementById('modalFrame').src =
+    `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1`;
+  document.getElementById('vidModal').classList.add('open');
+}
+function closeVidModal() {
+  document.getElementById('vidModal').classList.remove('open');
+  document.getElementById('modalFrame').src = '';
+}
+function onVidBg(e) {
+  if (e.target === document.getElementById('vidModal')) closeVidModal();
+}
+
+/* ════════════════════════════════════════════════
+   KEYBOARD
+   ════════════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  const onImg   = document.getElementById('page-bilder').classList.contains('active');
+  const onVid   = document.getElementById('page-videos').classList.contains('active');
+  const imgOpen = document.getElementById('imgModal').classList.contains('open');
+  const vidOpen = document.getElementById('vidModal').classList.contains('open');
+
+  if (imgOpen) { if (e.key === 'Escape') closeImgModal(); return; }
+  if (vidOpen) { if (e.key === 'Escape') closeVidModal(); return; }
+  if (e.key === 'Escape')      showPage('home');
+  if (e.key === 'ArrowLeft')  { if (onImg) cfNav('img',-1); if (onVid) cfNav('vid',-1); }
+  if (e.key === 'ArrowRight') { if (onImg) cfNav('img', 1); if (onVid) cfNav('vid', 1); }
+});
+
+/* ════════════════════════════════════════════════
+   TOUCH / SWIPE
+   ════════════════════════════════════════════════ */
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
+document.addEventListener('touchend',   e => {
+  const dx  = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) < 42) return;
+  const dir = dx > 0 ? -1 : 1;
+  if (document.getElementById('page-bilder').classList.contains('active')) cfNav('img', dir);
+  if (document.getElementById('page-videos').classList.contains('active')) cfNav('vid', dir);
+}, { passive:true });
+
+/* ════════════════════════════════════════════════
+   BACKGROUND FLOWER DECORATION
+   ════════════════════════════════════════════════ */
+(function() {
+  const container = document.getElementById('bg-flowers');
+
+  /* flower SVG as string */
+  function flowerSVG(p1, p2, center, size) {
+    return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}">
+      <ellipse cx="50" cy="18" rx="13" ry="20" fill="${p1}"     transform="rotate(0,50,50)"/>
+      <ellipse cx="50" cy="18" rx="13" ry="20" fill="${p2}"     transform="rotate(60,50,50)"/>
+      <ellipse cx="50" cy="18" rx="13" ry="20" fill="${p1}"     transform="rotate(120,50,50)"/>
+      <ellipse cx="50" cy="18" rx="13" ry="20" fill="${p2}"     transform="rotate(180,50,50)"/>
+      <ellipse cx="50" cy="18" rx="13" ry="20" fill="${p1}"     transform="rotate(240,50,50)"/>
+      <ellipse cx="50" cy="18" rx="13" ry="20" fill="${p2}"     transform="rotate(300,50,50)"/>
+      <circle cx="50" cy="50" r="18" fill="${center}"/>
+    </svg>`;
+  }
+
+  const flowers = [
+    /* x%,  y%,  size, p1,       p2,       center,   spin-s, float? */
+    [  2,   5,   110, '#FF3D8B','#FFD600','#FF7B00', 22,  false ],
+    [ 88,   4,    90, '#8B3FD9','#B77BF5','#FFD600', 18,  false ],
+    [  0,  70,    80, '#4EB84A','#7DD97A','#FFD600', 25,  false ],
+    [ 90,  68,   100, '#00B4A2','#4EB84A','#FF3D8B', 20,  false ],
+    [ 45,   0,    70, '#FFD600','#FFAB00','#FF3D8B', 30,  false ],
+    [ 50,  90,    75, '#B77BF5','#8B3FD9','#FF7B00', 28,  false ],
+    [ 15,  88,    60, '#FF7B00','#FFD600','#4EB84A', 16,  true  ],
+    [ 80,  85,    65, '#FF3D8B','#FF80B8','#8B3FD9', 19,  true  ],
+    [ 25,  10,    55, '#00B4A2','#7DD97A','#FFD600', 14,  true  ],
+    [ 70,  12,    60, '#FFD600','#FF3D8B','#8B3FD9', 17,  true  ],
+  ];
+
+  flowers.forEach(([x, y, size, p1, p2, ctr, spd, flt]) => {
+    const div = document.createElement('div');
+    div.className = 'bgf';
+    const anim = flt
+      ? `bgFloat ${spd * 0.6}s ease-in-out infinite`
+      : `bgSpin ${spd}s linear infinite`;
+    div.style.cssText = `
+      position:absolute;
+      left:${x}%; top:${y}%;
+      width:${size}px; height:${size}px;
+      opacity:0.11;
+      animation:${anim};
+      transform-origin:center;
+    `;
+    div.innerHTML = flowerSVG(p1, p2, ctr, size);
+    container.appendChild(div);
+  });
+
+  /* extra small scattered flowers */
+  const smColors = [
+    ['#FF3D8B','#FFD600','#FF7B00'],
+    ['#8B3FD9','#B77BF5','#FFD600'],
+    ['#4EB84A','#7DD97A','#FF3D8B'],
+    ['#00B4A2','#FFD600','#8B3FD9'],
+    ['#FF7B00','#FFD600','#FF3D8B'],
+  ];
+  for (let i = 0; i < 12; i++) {
+    const [p1,p2,ctr] = smColors[i % smColors.length];
+    const size = 30 + Math.random() * 35;
+    const div  = document.createElement('div');
+    div.className = 'bgf';
+    div.style.cssText = `
+      position:absolute;
+      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      width:${size}px; height:${size}px;
+      opacity:${0.06 + Math.random() * 0.06};
+      animation:bgSpin ${12+Math.random()*20}s linear infinite ${Math.random()>0.5?'reverse':''};
+      transform-origin:center;
+    `;
+    div.innerHTML = flowerSVG(p1, p2, ctr, size);
+    container.appendChild(div);
+  }
+})();
+</script>
+</body>
+</html>
